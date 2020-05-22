@@ -1,0 +1,5 @@
+com\hypnoticocelot\appengine\helloworldservice\HelloWorldConfiguration.class
+com\hypnoticocelot\appengine\helloworldservice\HelloWorldApplication.class
+com\hypnoticocelot\appengine\helloworldservice\resources\SheetsIO.class
+com\hypnoticocelot\appengine\helloworldservice\resources\LoginResource.class
+com\hypnoticocelot\appengine\helloworldservice\resources\HomeResource.class
