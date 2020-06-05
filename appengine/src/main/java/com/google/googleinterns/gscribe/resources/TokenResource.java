@@ -16,8 +16,16 @@
 
 package com.google.googleinterns.gscribe.resources;
 
+import com.google.googleinterns.gscribe.dao.impl.TokenDAOImpl;
+import com.google.googleinterns.gscribe.model.Token;
+import com.google.googleinterns.gscribe.util.AuthCodeToToken;
+import com.google.googleinterns.gscribe.util.IDVerifier;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.sql.SQLException;
 
 @Path("/token")
 public class TokenResource {
@@ -28,7 +36,9 @@ public class TokenResource {
     Function - get ( accessToken, refreshToken, userID ) from accessCode
     Output - return Status if accessToken and refreshToken was received
      */
-    public String saveToken(String accessCode) {
+    public String saveToken(String accessCode) throws GeneralSecurityException, IOException, SQLException {
+        Token token = new AuthCodeToToken().getToken(accessCode);
+        new TokenDAOImpl().postToken(token, null);
         return "Done";
     }
 
@@ -39,8 +49,16 @@ public class TokenResource {
     Function - get userID from IDToken and check if accessToken, refreshToken for user are present in database
     Output - return if accessToken and refreshToken present in database for user
      */
-    public String tokenPresentForUser(String IDToken) {
-        return "Needed";
+    public String tokenPresentForUser(String IDToken) throws GeneralSecurityException, IOException, SQLException {
+        String userID = new IDVerifier().verify(IDToken);
+        if (userID == null) {
+            return "ERROR: Failed id_token validation";
+        }
+        Token token = new TokenDAOImpl().getTokenForUser(userID, null);
+        if (token == null) {
+            return "Token not Found";
+        }
+        return "Token Found";
     }
 
 }
