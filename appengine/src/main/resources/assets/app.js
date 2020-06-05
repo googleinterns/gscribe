@@ -42,6 +42,7 @@ var userChanged = function (user) {
 };
 
 function sendCode() {
+    let IDToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
     auth2.grantOfflineAccess({
         'scope': "https://www.googleapis.com/auth/spreadsheets"
     }).then((res) => {
@@ -49,7 +50,8 @@ function sendCode() {
         jQuery.ajax({
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': IDToken
             },
             'type': 'POST',
             'url': "/api/token",
@@ -68,11 +70,11 @@ function codeNeeded() {
     jQuery.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': IDToken
         },
         'type': 'POST',
         'url': "/api/token/present",
-        'data': IDToken,
         'dataType': 'text',
         'success': function (data) {
             if (data === "Needed") {
@@ -89,9 +91,8 @@ function submitSheet() {
     let spreadsheetId = document.getElementById("spreadsheetId").value;
     let sheetId = document.getElementById("sheetId").value;
     let queryInfo = {
-        'IDToken': IDToken,
         'spreadsheetId': spreadsheetId,
-        'sheetId': sheetId
+        'sheetName': sheetId
     };
 
     $("#response-modal").modal({show: true});
@@ -99,7 +100,8 @@ function submitSheet() {
     jQuery.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': IDToken
         },
         'type': 'POST',
         'url': "/api/exam",

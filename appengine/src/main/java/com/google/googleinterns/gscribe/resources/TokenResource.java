@@ -21,6 +21,8 @@ import com.google.googleinterns.gscribe.model.Token;
 import com.google.googleinterns.gscribe.util.AuthCodeToToken;
 import com.google.googleinterns.gscribe.util.IDVerifier;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import java.io.IOException;
@@ -36,20 +38,22 @@ public class TokenResource {
     Function - get ( accessToken, refreshToken, userID ) from accessCode
     Output - return Status if accessToken and refreshToken was received
      */
-    public String saveToken(String accessCode) throws GeneralSecurityException, IOException, SQLException {
+    public String saveToken(@HeaderParam("Authorization") String IDToken, String accessCode) throws GeneralSecurityException, IOException, SQLException {
         Token token = new AuthCodeToToken().getToken(accessCode);
+        String userID = new IDVerifier().verify(IDToken);
+        if (!token.getUserID().equals(userID)) return "Failed";
         new TokenDAOImpl().postToken(token, null);
         return "Done";
     }
 
-    @POST
+    @GET
     @Path("/present")
      /*
     Input - IDToken
     Function - get userID from IDToken and check if accessToken, refreshToken for user are present in database
     Output - return if accessToken and refreshToken present in database for user
      */
-    public String tokenPresentForUser(String IDToken) throws GeneralSecurityException, IOException, SQLException {
+    public String tokenPresentForUser(@HeaderParam("Authorization") String IDToken) throws GeneralSecurityException, IOException, SQLException {
         String userID = new IDVerifier().verify(IDToken);
         if (userID == null) {
             return "ERROR: Failed id_token validation";
