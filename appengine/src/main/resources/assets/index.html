@@ -63,8 +63,7 @@
         <div class="card-body" id="submitSheetForm">
             <div class="card-text">
                 How to find spreadsheet and sheet ID?<br>
-                https://docs.google.com/spreadsheets/d/<span
-                    class="color-pink">spreadsheetId</span>/edit#gid=<span class="color-pink">sheetId</span>
+                https://docs.google.com/spreadsheets/d/ <span class="color-pink">spreadsheetId</span>/edit#gid=sheetId
             </div>
             <form onsubmit="codeNeeded();return false;">
                 <div class="form-group">
@@ -72,8 +71,8 @@
                     <input class="form-control" id="spreadsheetId" placeholder="Enter spreadsheet id" type="text">
                 </div>
                 <div class="form-group">
-                    <label for="sheetId">Sheet Id: </label>
-                    <input class="form-control" id="sheetId" placeholder="Enter sheet id" type="text">
+                    <label for="sheetName">Sheet Name: </label>
+                    <input class="form-control" id="sheetName" placeholder="Enter sheet name" type="text">
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>

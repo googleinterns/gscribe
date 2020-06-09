@@ -16,6 +16,8 @@
 
 package com.google.googleinterns.gscribe.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 
 public class Exam {
@@ -23,4 +25,36 @@ public class Exam {
     ArrayList<Question> questions;
     private int id;
 
+    public Exam(int id) {
+        this.id = id;
+    }
+
+    @JsonProperty
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
+
+    @JsonProperty
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
+
+    @JsonProperty
+    public int getId() {
+        return id;
+    }
+
+    @JsonProperty
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        String ret = " id: " + id;
+        for (Question question : questions) {
+            ret += "\n " + question.toString();
+        }
+        return ret;
+    }
 }

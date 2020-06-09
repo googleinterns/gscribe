@@ -16,6 +16,19 @@
 
 package com.google.googleinterns.gscribe.model;
 
+import com.google.api.client.auth.oauth2.TokenResponse;
+import com.google.api.client.auth.oauth2.TokenResponseException;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleRefreshTokenRequest;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.googleinterns.gscribe.resources.ExamResource;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 
 public class Token {
@@ -62,6 +75,36 @@ public class Token {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void refreshToken() throws IOException {
+
+        final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+        final String CREDENTIALS_FILE_PATH = "/credentials.json";
+        InputStream in = ExamResource.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        if (in == null) {
+            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
+        }
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        String clientID = clientSecrets.getWeb().getClientId();
+        String clientSecret = clientSecrets.getWeb().getClientSecret();
+        try {
+            TokenResponse response = new GoogleRefreshTokenRequest(new NetHttpTransport(), new JacksonFactory(), refreshToken, clientID, clientSecret).execute();
+            accessToken = response.getAccessToken();
+        } catch (TokenResponseException e) {
+            if (e.getDetails() != null) {
+                System.err.println("Error: " + e.getDetails().getError());
+                if (e.getDetails().getErrorDescription() != null) {
+                    System.err.println(e.getDetails().getErrorDescription());
+                }
+                if (e.getDetails().getErrorUri() != null) {
+                    System.err.println(e.getDetails().getErrorUri());
+                }
+            } else {
+                System.err.println(e.getMessage());
+            }
+        }
+
     }
 
 }

@@ -42,7 +42,7 @@ public class TokenResource {
         Token token = new AuthCodeToToken().getToken(accessCode);
         String userID = new IDVerifier().verify(IDToken);
         if (!token.getUserID().equals(userID)) return "Failed";
-        new TokenDAOImpl().postToken(token, null);
+        if (!(new TokenDAOImpl().postToken(token, null)).equals("Successful")) return "Failed";
         return "Done";
     }
 

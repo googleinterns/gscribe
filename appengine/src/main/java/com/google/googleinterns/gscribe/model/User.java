@@ -18,11 +18,21 @@ package com.google.googleinterns.gscribe.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.sql.Timestamp;
+
 public class User {
 
     private String accessToken;
     private String refreshToken;
-    private String userID;
+    private String id;
+    private Timestamp timestamp;
+
+    public User(String id, String accessToken, String refreshToken, Timestamp timestamp) {
+        this.id = id;
+        this.timestamp = timestamp;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
 
     @JsonProperty
     public String getAccessToken() {
@@ -45,13 +55,22 @@ public class User {
     }
 
     @JsonProperty
-    public String getUserID() {
-        return userID;
+    public String getId() {
+        return id;
     }
 
     @JsonProperty
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setId(String id) {
+        this.id = id;
     }
 
+    @JsonProperty
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    @JsonProperty
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
 }

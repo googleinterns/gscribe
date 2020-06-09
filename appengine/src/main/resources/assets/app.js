@@ -73,11 +73,11 @@ function codeNeeded() {
             'Content-Type': 'application/json',
             'Authorization': IDToken
         },
-        'type': 'POST',
+        'type': 'GET',
         'url': "/api/token/present",
         'dataType': 'text',
         'success': function (data) {
-            if (data === "Needed") {
+            if (data === "Token not Found") {
                 sendCode();
             } else submitSheet();
         }
@@ -89,10 +89,10 @@ function submitSheet() {
 
     let IDToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
     let spreadsheetId = document.getElementById("spreadsheetId").value;
-    let sheetId = document.getElementById("sheetId").value;
+    let sheetName = document.getElementById("sheetName").value;
     let queryInfo = {
-        'spreadsheetId': spreadsheetId,
-        'sheetName': sheetId
+        'spreadsheetID': spreadsheetId,
+        'sheetName': sheetName
     };
 
     $("#response-modal").modal({show: true});

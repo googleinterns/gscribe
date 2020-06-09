@@ -21,16 +21,16 @@ import java.util.ArrayList;
 public class Question {
 
     ArrayList<String> options;
-    private String number;
+    private int number;
     private String statement;
     private QuestionType type;
     private int points;
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -64,6 +64,17 @@ public class Question {
 
     public void setOptions(ArrayList<String> options) {
         this.options = options;
+    }
+
+    @Override
+    public String toString() {
+        String ret = "questionNum: " + number + ", ProblemStatement: " + statement + ", Points: " + points + ", Type: " + type;
+        if (type == QuestionType.MCQ) {
+            for (int i = 0; i < 4; i++) {
+                ret += ", Option" + (i + 1) + ": " + options.get(0);
+            }
+        }
+        return ret;
     }
 
 }

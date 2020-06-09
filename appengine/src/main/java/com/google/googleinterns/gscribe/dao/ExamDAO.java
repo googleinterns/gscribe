@@ -16,19 +16,20 @@
 
 package com.google.googleinterns.gscribe.dao;
 
-import com.google.googleinterns.gscribe.model.User;
+import com.google.googleinterns.gscribe.model.Exam;
+import com.google.googleinterns.gscribe.model.ExamMetadata;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface UserDAO {
+public interface ExamDAO {
 
-    String save(User user, Connection con) throws SQLException;
+    int saveExamMetadata(ExamMetadata metadata, Connection con) throws SQLException;
 
-    User getUserByID(String id, Connection con) throws SQLException;
+    String saveExam(Exam exam, Connection con) throws SQLException;
 
-    String updateAccessToken(User user, Connection con) throws SQLException;
+    Exam getExam(String id, Connection con);
 
-    String updateTokens(User user, Connection con) throws SQLException;
+    Exam getExamsByUser(String userID, Connection con);
 
 }

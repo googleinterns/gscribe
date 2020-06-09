@@ -16,7 +16,18 @@
 
 package com.google.googleinterns.gscribe.resources;
 
+import com.google.googleinterns.gscribe.dao.impl.ExamDAOImpl;
+import com.google.googleinterns.gscribe.model.Exam;
+import com.google.googleinterns.gscribe.model.ExamMetadata;
+import com.google.googleinterns.gscribe.util.CreateExam;
+import com.google.googleinterns.gscribe.util.IDVerifier;
+import com.google.googleinterns.gscribe.util.ParseSheet;
+
 import javax.ws.rs.*;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.sql.SQLException;
+import java.util.List;
 
 @Path("/exam")
 @Produces("application/json")
@@ -28,7 +39,16 @@ public class ExamResource {
     Function - validate the exam from spreadsheet and then post exam in database
     Output - if successfully validated then return examId
      */
-    public String postExam() {
+    public String postExam(@HeaderParam("Authorization") String IDToken, ExamMetadata metadata) throws GeneralSecurityException, IOException, SQLException {
+        String userID = new IDVerifier().verify(IDToken);
+        if (userID == null) return "ERROR: Authorization failed";
+        metadata.setUserID(userID);
+        List<List<Object>> exam = new ParseSheet().processQuestionPaper(metadata);
+        int examID = new ExamDAOImpl().saveExamMetadata(metadata, null);
+        if (examID == -1) return "Failed";
+        metadata.setId(examID);
+        Exam finalExam = new CreateExam().create(exam, examID);
+        String status = new ExamDAOImpl().saveExam(finalExam, null);
         return "/exam";
     }
 
