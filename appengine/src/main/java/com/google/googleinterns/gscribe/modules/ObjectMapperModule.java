@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package com.google.googleinterns.gscribe.services.data;
+package com.google.googleinterns.gscribe.modules;
 
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
-public class ExamSource {
+public class ObjectMapperModule extends AbstractModule {
 
-    List<List<Object>> exam;
-
-    public ExamSource() {
+    @Provides
+    @Singleton
+    public ObjectMapper objectMapperProvider() {
+        return new ObjectMapper();
     }
 
-    public List<List<Object>> getExam() {
-        return exam;
-    }
-
-    public void setExam(List<List<Object>> exam) {
-        this.exam = exam;
-    }
 }

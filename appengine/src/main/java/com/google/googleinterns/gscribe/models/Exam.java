@@ -16,5 +16,33 @@
 
 package com.google.googleinterns.gscribe.models;
 
+
 public class Exam {
+
+    private ExamMetadata examMetadata;
+    private Questions questions;
+
+    public Exam() {
+    }
+
+    public Exam(ExamMetadata examMetadata, Questions questions) {
+        this.examMetadata = examMetadata;
+        this.questions = questions;
+    }
+
+    public ExamMetadata getExamMetadata() {
+        return examMetadata;
+    }
+
+    public void setExamMetadata(ExamMetadata examMetadata) {
+        this.examMetadata = examMetadata;
+    }
+
+    public Questions getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Questions questions) {
+        this.questions = questions;
+    }
 }

@@ -14,10 +14,22 @@
  * limitations under the License.
  */
 
-package com.google.googleinterns.gscribe.resources.io.exception;
+package com.google.googleinterns.gscribe.models;
 
-public class AuthenticationException extends RuntimeException {
-    public AuthenticationException(String message) {
-        super(message);
+import java.util.List;
+
+public class Answers {
+
+    private List<Answer> answersList;
+
+    public Answers() {
+    }
+
+    public List<Answer> getAnswersList() {
+        return answersList;
+    }
+
+    public void setAnswersList(List<Answer> answersList) {
+        this.answersList = answersList;
     }
 }

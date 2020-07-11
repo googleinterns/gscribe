@@ -14,7 +14,22 @@
  * limitations under the License.
  */
 
-package com.google.googleinterns.gscribe.dao;
+package com.google.googleinterns.gscribe.models;
 
-public class ExamDao {
+import java.util.List;
+
+public class Questions {
+
+    private List<Question> questionsList;
+
+    public Questions() {
+    }
+
+    public List<Question> getQuestionsList() {
+        return questionsList;
+    }
+
+    public void setQuestionsList(List<Question> questionsList) {
+        this.questionsList = questionsList;
+    }
 }

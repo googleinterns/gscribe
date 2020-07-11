@@ -16,5 +16,28 @@
 
 package com.google.googleinterns.gscribe.models;
 
-public class UserToken {
+
+public class Answer {
+
+    private String answer;
+    private int questionNum;
+
+    public Answer() {
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public int getQuestionNum() {
+        return questionNum;
+    }
+
+    public void setQuestionNum(int questionNum) {
+        this.questionNum = questionNum;
+    }
 }

@@ -17,4 +17,36 @@
 package com.google.googleinterns.gscribe.models;
 
 public class Question {
+
+    private QuestionType type;
+    private String statement;
+    private int points;
+    private int questionNumber;
+
+    public Question() {
+    }
+
+    public Question(QuestionType type, String statement, int points, int questionNumber) {
+        this.type = type;
+        this.statement = statement;
+        this.points = points;
+        this.questionNumber = questionNumber;
+    }
+
+    public QuestionType getType() {
+        return type;
+    }
+
+    public String getStatement() {
+        return statement;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getQuestionNumber() {
+        return questionNumber;
+    }
+
 }
