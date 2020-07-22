@@ -43,12 +43,13 @@ public class MultipleChoiceQuestion extends Question {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MultipleChoiceQuestion)) return false;
+        if (!super.equals(o)) return false;
         MultipleChoiceQuestion that = (MultipleChoiceQuestion) o;
-        return getOptions().equals(that.getOptions());
+        return options.equals(that.options);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOptions());
+        return Objects.hash(super.hashCode(), options);
     }
 }

@@ -27,6 +27,11 @@ public class Answer {
     public Answer() {
     }
 
+    public Answer(String answer, int questionNum) {
+        this.answer = answer;
+        this.questionNum = questionNum;
+    }
+
     public String getAnswer() {
         return answer;
     }
@@ -48,12 +53,12 @@ public class Answer {
         if (this == o) return true;
         if (!(o instanceof Answer)) return false;
         Answer answer1 = (Answer) o;
-        return getQuestionNum() == answer1.getQuestionNum() &&
-                getAnswer().equals(answer1.getAnswer());
+        return questionNum == answer1.questionNum &&
+                answer.equals(answer1.answer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAnswer(), getQuestionNum());
+        return Objects.hash(answer, questionNum);
     }
 }
